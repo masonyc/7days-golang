@@ -2,17 +2,80 @@ package geecache
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
+	"sync"
+
+	"github.com/masonyc/7days-golang/gee-cache/geecache/consistenthash"
 )
 
-const defaultBasePath = "/_geecache/"
+const (
+	defaultBasePath = "/_geecache/"
+	defaultReplicas = 50
+)
 
 // HTTP SERVER / PEER
 type HTTPPool struct {
-	basePath string
-	self     string
+	basePath    string
+	self        string
+	mu          sync.Mutex
+	peers       *consistenthash.Map
+	httpGetters map[string]*httpGetter
+}
+
+//init peers and getters in http pool object
+func (h *HTTPPool) Set(peers ...string) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	h.peers = consistenthash.New(defaultReplicas, nil)
+	h.peers.Add(peers...)
+	h.httpGetters = make(map[string]*httpGetter, len(peers))
+	for _, peer := range peers {
+		h.httpGetters[peer] = &httpGetter{baseURL: peer + h.basePath}
+	}
+}
+
+func (h *HTTPPool) PickPeer(key string) (PeerGetter, bool) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	if peer := h.peers.Get(key); peer != "" && peer != h.self {
+		return h.httpGetters[key], true
+	}
+	return nil, false
+}
+
+var _ PeerPicker = (*HTTPPool)(nil)
+
+// HTTP CLIENT
+type httpGetter struct {
+	baseURL string
+}
+
+var _ PeerGetter = (*httpGetter)(nil)
+
+func (hg *httpGetter) Get(group string, key string) ([]byte, error) {
+	//  set up cache url
+	u := fmt.Sprintf("%v%v/%v",
+		hg.baseURL,
+		url.QueryEscape(group),
+		url.QueryEscape(key))
+	res, err := http.Get(u)
+	if err != nil {
+		return nil, err
+	}
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("server returned: %v", res.Status)
+	}
+	b, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
+	if err != nil {
+		return nil, fmt.Errorf("reading response body: %v", err)
+	}
+
+	return b, nil
 }
 
 func NewHTTPPool(self string) *HTTPPool {
