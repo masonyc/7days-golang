@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/masonyc/go-gin-example/pkg/e"
-	"github.com/masonyc/go-gin-example/pkg/util"
+	"github.com/masonyc/7days-golang/go-gin-example/pkg/e"
+	"github.com/masonyc/7days-golang/go-gin-example/pkg/util"
 )
 
 func JWT() gin.HandlerFunc {

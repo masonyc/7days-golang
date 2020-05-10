@@ -5,7 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/masonyc/go-gin-example/pkg/settings"
+	"github.com/masonyc/7days-golang/go-gin-example/pkg/settings"
 )
 
 var db *gorm.DB

@@ -2,10 +2,10 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/masonyc/go-gin-example/middleware/jwt"
-	"github.com/masonyc/go-gin-example/pkg/settings"
-	"github.com/masonyc/go-gin-example/routers/api"
-	v1 "github.com/masonyc/go-gin-example/routers/api/v1"
+	"github.com/masonyc/7days-golang/go-gin-example/middleware/jwt"
+	"github.com/masonyc/7days-golang/go-gin-example/pkg/settings"
+	"github.com/masonyc/7days-golang/go-gin-example/routers/api"
+	v1 "github.com/masonyc/7days-golang/go-gin-example/routers/api/v1"
 )
 
 func InitRouter() *gin.Engine {

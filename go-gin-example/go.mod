@@ -1,4 +1,4 @@
-module github.com/masonyc/go-gin-example
+module github.com/masonyc/7days-golang/go-gin-example
 
 go 1.14
 
@@ -16,13 +16,13 @@ require (
 )
 
 replace (
-	github.com/masonyc/go-gin-example/conf => ./conf
-	github.com/masonyc/go-gin-example/db => ./db
-	github.com/masonyc/go-gin-example/middleware => ./middleware
-	github.com/masonyc/go-gin-example/middleware/jwt => ./middleware/jwt
-	github.com/masonyc/go-gin-example/models => ./models
-	github.com/masonyc/go-gin-example/pkg/e => ./pkg/e
-	github.com/masonyc/go-gin-example/pkg/setting => ./pkg/setting
-	github.com/masonyc/go-gin-example/pkg/util => ./pkg/util
-	github.com/masonyc/go-gin-example/routers => ./routers
+	github.com/masonyc/7days-golang/go-gin-example/conf => ./conf
+	github.com/masonyc/7days-golang/go-gin-example/db => ./db
+	github.com/masonyc/7days-golang/go-gin-example/middleware => ./middleware
+	github.com/masonyc/7days-golang/go-gin-example/middleware/jwt => ./middleware/jwt
+	github.com/masonyc/7days-golang/go-gin-example/models => ./models
+	github.com/masonyc/7days-golang/go-gin-example/pkg/e => ./pkg/e
+	github.com/masonyc/7days-golang/go-gin-example/pkg/setting => ./pkg/setting
+	github.com/masonyc/7days-golang/go-gin-example/pkg/util => ./pkg/util
+	github.com/masonyc/7days-golang/go-gin-example/routers => ./routers
 )

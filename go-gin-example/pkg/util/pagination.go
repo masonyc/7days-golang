@@ -2,7 +2,7 @@ package util
 
 import (
 	"github.com/gin-gonic/gin"
-	setting "github.com/masonyc/go-gin-example/pkg/settings"
+	setting "github.com/masonyc/7days-golang/go-gin-example/pkg/settings"
 	"github.com/unknwon/com"
 )
 
